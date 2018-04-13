@@ -44,7 +44,7 @@ public class SecondApplication {
 	
 	@PostConstruct
 	private void appStarted() {
-		taskScheduler().schedule(this::checkModel, new PeriodicTrigger(1, SECONDS));
+		taskScheduler().schedule(this::checkModel, new PeriodicTrigger(5, SECONDS));
 	}
 	
 	private void checkModel() {

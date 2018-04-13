@@ -1,5 +1,6 @@
 package io.github.cepr0.firstapp;
 
+import io.github.cepr0.commonpart.Model;
 import io.github.cepr0.commonpart.Repo;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -51,14 +52,10 @@ public class FirstApplication {
 	
 	@PostConstruct
 	private void appStarted() {
-		taskScheduler().schedule(this::checkModel, new PeriodicTrigger(1, SECONDS));
+		taskScheduler().schedule(this::createModel, new PeriodicTrigger(1, SECONDS));
 	}
 
-	private void checkModel() {
-		long count = repo.count();
-		if (count > COUNTER.get()) {
-			log.info("Models count: {} ", count);
-			COUNTER.set(count);
-		}
+	private void createModel() {
+		log.info("Model created: {} ", repo.save(new Model("model" + COUNTER.incrementAndGet())));
 	}
 }
